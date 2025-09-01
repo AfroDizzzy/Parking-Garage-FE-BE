@@ -1,7 +1,7 @@
 import React from "react";
 import { Calendar, Car, User, X } from "lucide-react";
-import { deleteBooking } from "../services/api";
 import { type Booking } from "../models/booking";
+import { deleteBooking } from "../services/bookingService";
 
 interface Props {
   bookings: Booking[];

@@ -1,26 +1,7 @@
 import axios from "axios";
+import type { Booking } from "../models/booking";
 
 const API_BASE = "http://localhost:3001/api";
-
-export interface Employee {
-  id: number;
-  name: string;
-  email: string;
-}
-
-export interface Booking {
-  id: number;
-  employeeId: number;
-  employeeName: string;
-  date: string;
-  notes?: string;
-  createdAt: string;
-}
-
-export const getEmployees = async (): Promise<Employee[]> => {
-  const { data } = await axios.get<Employee[]>(`${API_BASE}/employees`);
-  return data;
-};
 
 export const getBookings = async (): Promise<Booking[]> => {
   const { data } = await axios.get<Booking[]>(`${API_BASE}/bookings`);
