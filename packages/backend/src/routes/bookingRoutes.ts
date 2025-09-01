@@ -1,3 +1,4 @@
+import { Router } from "express";
 import {
   cancelBooking,
   checkDateAvailability,
@@ -5,29 +6,21 @@ import {
   getAllBookings,
   getUpcomingBookings,
 } from "../controllers/bookingController";
-import { Router } from "express";
-
-const {
+import {
   validateBookingInput,
   validateDateParam,
   validateIdParam,
-} = require("../middleware/validation");
+} from "../middleware/validation";
 
 const router = Router();
 
-// GET /api/bookings
+//base endpoint is /api/bookings
 router.get("/", getAllBookings);
-
-// GET /api/bookings/upcoming
 router.get("/upcoming", getUpcomingBookings);
+router.get("/check/:date", [validateDateParam], checkDateAvailability);
 
-// GET /api/bookings/check/:date
-router.get("/check/:date", checkDateAvailability);
+router.post("/", [validateBookingInput], createBooking);
 
-// POST /api/bookings
-router.post("/", createBooking);
-
-// DELETE /api/bookings/:id
-router.delete("/:id", cancelBooking);
+router.delete("/:id", [validateIdParam], cancelBooking);
 
 export default router;

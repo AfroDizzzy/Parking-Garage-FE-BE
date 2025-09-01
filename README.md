@@ -4,9 +4,58 @@
 
 A simple application that allows employees to book the single car park space for a specific date.
 
-The project is seperated into two distinct packages, a backend and frontend.
+The project is seperated into two distinct packages, a backend and frontend. You have to run each one individually.
+
+--- Back-End Endpoints ---
+GET /api/employees
+Returns list of all employees
+
+GET /api/bookings
+Returns all bookings with employee names
+
+GET /api/bookings/upcoming
+Returns upcoming bookings (next 30 days)
+
+GET /api/bookings/check/:date
+Check if a specific date is available
+Parameters: date (YYYY-MM-DD format)
+Response: { available: boolean, bookedBy?: string }
+
+POST /api/bookings
+Create a new booking
+Body: { employeeId: number, date: string, notes?: string }
+Response: Created booking object
+
+DELETE /api/bookings/:id
+Cancel a booking
+Parameters: id (booking ID)
+
+# Requirements
+
+Node 23.11
+
+# Running Projects Locally
 
 ### Front-End
+
+--- commands to use ---
+npm install
+npm run dev
+
+Navigate to http://localhost:5173/ on your browser
+
+### Back-End
+
+--- commands to use ---
+npm install
+npm run build
+npm run start
+
+Access the api via http://localhost:3001
+
+# Project Comments
+
+## Front-End
 
 The front-end is a simple react + vite + tailwind base using as limited amount of libraries to maintain lightness and reduce unseen complexity.
 
@@ -17,8 +66,6 @@ Prop drilling has been used instead of state manager such as Redux or tanstack t
 To focus on a seperation of concerns within the project a type-based(layered) structure has been followed, with the components following a feature-based structure. Given the small nature of the application I thought this approach kept a balance between readability and complexity by keeping each component feature/domain focused.
 
 Api calls have been kept in a "services" directory and seperated into the relavant domain based backend endpoints used of booking and employee. Similarly, the model interfacts have been placed in their own seperate models dictory and files.
-
-All endpoints have been engineered to fail gracefully via accept failed api requests.
 
 #### known bugs/issues
 
@@ -34,13 +81,17 @@ No global css vars. There are quite a number of places were global css variables
 
 The default vite logo is the flavicon.
 
-### Back-End
+All endpoints have not been engineered to fail gracefully, which means if the api is down then the app just doesnt work.
+
+## Back-End
 
 Express was the library of choice for the backend given the simple nature of the app.
 
 An in-memory array is the "database" for the backend, with abit more a time sqlite would have been used as the in-memory database of choice. Naturally this could be extracted further into a stand-alone database given even more time.
 
 Basic input validation has been include for the input dates, employee id's, note length limit.
+
+No .env file has been implemnted but the basic scafolding to use it (variables use defaults if no .env value found).
 
 #### known bugs/issues
 
@@ -49,3 +100,18 @@ There is no way to add/remove users. Can be done manually by admins but can be q
 No authentification/authorisation due to time constraints. Therefore no cors middleware used.
 
 No cross-site protecting for the notes input area. Simple cleansing of the input would fix this.
+
+Not really an issue but something to note, but I've written this using no classes and used interfaces instead.
+
+Hot loading isnt enabled, so developing for this can be quite clunky. Using vite would fix this, and would easy (given time) to implement.
+
+Better logging to allow for
+
+# Cool features to add in the future
+
+Send confirmation emails for bookings
+Connect with calendar systems (Outlook, Google Calendar)
+Allow weekly/monthly recurring reservations
+Usage statistics and reporting
+React Native version for mobile users
+Dockerize and setup a full CI/CD pipeline
