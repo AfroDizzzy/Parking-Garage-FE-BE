@@ -7,6 +7,7 @@ A simple application that allows employees to book the single car park space for
 The project is seperated into two distinct packages, a backend and frontend. You have to run each one individually.
 
 --- Back-End Endpoints ---
+
 GET /api/employees
 Returns list of all employees
 
@@ -38,18 +39,25 @@ Node 23.11
 
 ### Front-End
 
---- commands to use ---
+CLI commands in order:
+
 npm install
+
 npm run dev
+
 
 Navigate to http://localhost:5173/ on your browser
 
 ### Back-End
 
---- commands to use ---
+CLI commands in order:
+
 npm install
+
 npm run build
+
 npm run start
+
 
 Access the api via http://localhost:3001
 
@@ -67,7 +75,7 @@ To focus on a seperation of concerns within the project a type-based(layered) st
 
 Api calls have been kept in a "services" directory and seperated into the relavant domain based backend endpoints used of booking and employee. Similarly, the model interfacts have been placed in their own seperate models dictory and files.
 
-#### known bugs/issues
+### known bugs/issues
 
 The native calender used clips unless you use p-6, or use a smaller screen size. Would be fixed by using p-6 or prebuilt component from something like daisy-ui.
 
@@ -87,13 +95,16 @@ All endpoints have not been engineered to fail gracefully, which means if the ap
 
 ## Back-End
 
-Express was the library of choice for the backend given the simple nature of the app.
+
+Express was the library of choice for the backend given that I am comfortable with it, and because Quanitiful use it with their backend systems.
+
+MVC or a service-oriented backend structure was used for the structure of this project. For example: interaction with the booking data(CRUD operations) is handled inside the bookingModel, the calls to models and their services is done inside the bookingController. There isnt any view or presentation layer since this is an API that doesnt return HTML. There isnt any service layer or any complex business logic, however the middleware can be see as the service layer as it processes any inputs to the endpoints before passing the request into the controllers. 
 
 An in-memory array is the "database" for the backend, with abit more a time sqlite would have been used as the in-memory database of choice. Naturally this could be extracted further into a stand-alone database given even more time.
 
-Basic input validation has been include for the input dates, employee id's, note length limit.
+Basic input validation has been include for the input dates, employee id's, and note length limit.
 
-#### known bugs/issues
+### known bugs/issues
 
 There is no way to add/remove users. Can be done manually by admins but can be quite time-consuming once you scale to a larger user-base.
 
