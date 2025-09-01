@@ -121,8 +121,13 @@ Logging in general.
 # Cool features to add in the future
 
 Send confirmation emails for bookings
+
 Connect with calendar systems (Outlook, Google Calendar)
+
 Allow weekly/monthly recurring reservations
+
 Usage statistics and reporting
+
 React Native version for mobile users
+
 Dockerize and setup a full CI/CD pipeline
