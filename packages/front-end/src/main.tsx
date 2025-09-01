@@ -5,7 +5,6 @@ import CarParkBookingSystem from "./carParkingBookingSystem";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    {/* <App /> */}
     <CarParkBookingSystem></CarParkBookingSystem>
   </StrictMode>
 );

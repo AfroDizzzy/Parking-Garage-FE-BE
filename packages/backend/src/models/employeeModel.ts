@@ -14,7 +14,7 @@ export const getEmployees = (): Employee[] => {
 };
 
 export const getEmployeeById = (id: number): Employee | undefined => {
-  return employees.find((emp) => emp.id === id);
+  return employees.find((employee) => employee.id === id);
 };
 
 export const addEmployee = (employee: Omit<Employee, "id">): Employee => {

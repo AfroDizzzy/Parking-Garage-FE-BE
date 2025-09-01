@@ -90,14 +90,12 @@ export const createBooking = (
   try {
     const { employeeId, date, notes } = req.body;
 
-    // Check if employee exists
     const employee = getEmployeeById(employeeId);
     if (!employee) {
       res.status(400).json({ error: "Invalid employee ID" } as any);
       return;
     }
 
-    // Check if date is in the future
     const bookingDate = new Date(date);
     const today = new Date();
     today.setHours(0, 0, 0, 0);
@@ -107,14 +105,12 @@ export const createBooking = (
       return;
     }
 
-    // Check if slot is already booked
     const existingBooking = getBookingByDate(date);
     if (existingBooking) {
       res.status(409).json({ error: "This date is already booked" } as any);
       return;
     }
 
-    // Create new booking
     const newBooking = addBooking({
       employeeId,
       date,

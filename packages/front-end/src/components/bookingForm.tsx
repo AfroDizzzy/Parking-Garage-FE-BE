@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { Calendar, Plus } from "lucide-react";
-import { type Employee, createBooking } from "../services/api";
-
+import { Calendar } from "lucide-react";
+import { createBooking } from "../services/bookingService";
+import type { Employee } from "../models/employee";
 interface Props {
   employees: Employee[];
   onBookingCreated: () => void;
@@ -45,8 +45,7 @@ export const BookingForm: React.FC<Props> = ({
   return (
     <div className="space-y-6">
       <div className="flex items-center space-x-2 mb-4">
-        <Plus className="w-5 h-5 text-blue-600" />
-        <h2 className="text-xl font-semibold text-gray-800">New Booking</h2>
+        <h2 className="text-xl fontsemibold text-gray-800">New Booking</h2>
       </div>
 
       <div className="space-y-4">
@@ -60,9 +59,9 @@ export const BookingForm: React.FC<Props> = ({
             className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           >
             <option value="">Select an employee</option>
-            {employees.map((e) => (
-              <option key={e.id} value={e.id}>
-                {e.name}
+            {employees.map((employee) => (
+              <option key={employee.id} value={employee.id}>
+                {employee.name}
               </option>
             ))}
           </select>

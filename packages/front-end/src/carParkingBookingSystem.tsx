@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { Header } from "./components/Header";
+
+import { type Booking } from "./models/booking";
+import { type Employee } from "./models/employee";
+import { BookingForm } from "./components/bookingForm";
+import { UpcomingBookings } from "./components/upcomingBookings";
+import { BookingStats } from "./components/bookingStats";
 import { MessageBanner } from "./components/MessageBanner";
+import { Header } from "./components/Header";
+import { getEmployees } from "./services/employeeService";
 import {
   checkDate,
   getBookings,
-  getEmployees,
   getUpcomingBookings,
-  type Booking,
-  type Employee,
-} from "./services/api";
-import { BookingForm } from "./components/bookingForm";
-import { BookingStats } from "./components/bookingStats";
+} from "./services/bookingService";
 
 const CarParkBookingSystem: React.FC = () => {
   const [employees, setEmployees] = useState<Employee[]>([]);
@@ -63,6 +65,10 @@ const CarParkBookingSystem: React.FC = () => {
                 employees={employees}
                 onBookingCreated={loadData}
                 getTodayDate={getTodayDate}
+              />
+              <UpcomingBookings
+                bookings={upcomingBookings}
+                onBookingCancelled={loadData}
               />
             </div>
 
