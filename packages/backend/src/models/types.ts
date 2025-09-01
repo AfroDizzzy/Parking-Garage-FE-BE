@@ -1,16 +1,4 @@
-export interface Employee {
-  id: number;
-  name: string;
-  email: string;
-}
-
-export interface Booking {
-  id: number;
-  employeeId: number;
-  date: string;
-  notes: string;
-  createdAt: string;
-}
+import { Booking } from "./bookingModel";
 
 export interface BookingWithEmployeeName extends Booking {
   employeeName: string;

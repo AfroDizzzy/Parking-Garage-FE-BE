@@ -13,11 +13,9 @@ const errorHandler = (
 ): void => {
   console.error(err.stack);
 
-  // Default error response
   let statusCode = err.statusCode || 500;
   let message = err.message || "Something went wrong!";
 
-  // Handle specific error types
   if (err.name === "ValidationError") {
     statusCode = 400;
     message = err.message;
@@ -28,7 +26,6 @@ const errorHandler = (
     statusCode = 409;
     message = "Duplicate entry";
   } else if (statusCode === 500) {
-    // Don't expose internal server errors in production
     message =
       process.env.NODE_ENV === "production" ? "Internal server error" : message;
   }
@@ -37,7 +34,6 @@ const errorHandler = (
     error: message,
   };
 
-  // Include stack trace in development
   if (process.env.NODE_ENV === "development") {
     errorResponse.stack = err.stack;
   }

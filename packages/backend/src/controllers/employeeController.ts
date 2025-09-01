@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { getEmployees } from "../models/employeeModel";
-import { Employee } from "../models/types";
+import { Employee } from "../models/employeeModel";
 
 export const getAllEmployees = (req: Request, res: Response): void => {
   try {

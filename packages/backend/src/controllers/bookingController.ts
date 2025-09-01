@@ -8,13 +8,13 @@ import {
 } from "../models/bookingModel";
 import { getEmployeeById } from "../models/employeeModel";
 import {
-  Booking,
   BookingWithEmployeeName,
   CreateBookingRequest,
   BookingAvailabilityResponse,
   CreateBookingResponse,
   CancelBookingResponse,
 } from "../models/types";
+import { Booking } from "../models/bookingModel";
 
 export const getAllBookings = (req: Request, res: Response): void => {
   try {
@@ -37,14 +37,16 @@ export const getAllBookings = (req: Request, res: Response): void => {
 export const getUpcomingBookings = (req: Request, res: Response): void => {
   try {
     const today = new Date();
-    const thirtyDaysFromNow = new Date();
-    thirtyDaysFromNow.setDate(today.getDate() + 30);
+    const thirtyDaysFromNow = new Date().setDate(today.getDate() + 30);
 
     const bookings: Booking[] = getBookings();
     const upcomingBookings: BookingWithEmployeeName[] = bookings
       .filter((booking) => {
         const bookingDate = new Date(booking.date);
-        return bookingDate >= today && bookingDate <= thirtyDaysFromNow;
+        return (
+          bookingDate.getDate() >= today.getDate() &&
+          bookingDate.getDate() <= thirtyDaysFromNow
+        );
       })
       .map((booking) => {
         const employee = getEmployeeById(booking.employeeId);

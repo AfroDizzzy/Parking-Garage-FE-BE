@@ -35,6 +35,7 @@ export const BookingForm: React.FC<Props> = ({
       setSelectedEmployee("");
       setSelectedDate("");
       setNotes("");
+      alert("Booking Created!");
     } catch {
       alert("Booking failed. Try again.");
     } finally {

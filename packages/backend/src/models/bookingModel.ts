@@ -1,4 +1,12 @@
-import { Booking, CreateBookingRequest } from "./types";
+import { CreateBookingRequest } from "./types";
+
+export interface Booking {
+  id: number;
+  employeeId: number;
+  date: string;
+  notes: string;
+  createdAt: string;
+}
 
 // In-memory storage (replace with database in production)
 let bookings: Booking[] = [];

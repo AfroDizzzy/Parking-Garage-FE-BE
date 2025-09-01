@@ -3,7 +3,7 @@ import { getAllEmployees } from "../controllers/employeeController";
 
 const router = Router();
 
-// GET /api/employees
+// base endpoint is /api/employees
 router.get("/", getAllEmployees);
 
 export default router;

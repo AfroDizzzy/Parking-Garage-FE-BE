@@ -1,4 +1,8 @@
-import { Employee } from "./types";
+export interface Employee {
+  id: number;
+  name: string;
+  email: string;
+}
 
 // In-memory storage (replace with database in production)
 let employees: Employee[] = [

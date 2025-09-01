@@ -1,6 +1,6 @@
 import React from "react";
 
-export const Header: React.FC = () => (
+export const HeaderBanner: React.FC = () => (
   <div className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white p-6">
     <div className="flex items-center space-x-3">
       <div>
