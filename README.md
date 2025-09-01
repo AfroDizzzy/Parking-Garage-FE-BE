@@ -37,18 +37,7 @@ Node 23.11
 
 # Running Projects Locally
 
-### Front-End
-
-CLI commands in order:
-
-npm install
-
-npm run dev
-
-
-Navigate to http://localhost:5173/ on your browser
-
-### Back-End
+### Back-End (RUN FIRST)
 
 CLI commands in order:
 
@@ -58,8 +47,17 @@ npm run build
 
 npm run start
 
-
 Access the api via http://localhost:3001
+
+### Front-End
+
+CLI commands in order:
+
+npm install
+
+npm run dev
+
+Navigate to http://localhost:5173/ on your browser
 
 # Project Comments
 
