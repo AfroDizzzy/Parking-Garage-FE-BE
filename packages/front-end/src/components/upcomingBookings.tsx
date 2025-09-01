@@ -1,113 +1,80 @@
-import React, { useState } from "react";
-import { Calendar, Plus } from "lucide-react";
-import { createBooking, type Employee } from "../services/api";
+import React from "react";
+import { Calendar, Car, User, X } from "lucide-react";
+import { deleteBooking } from "../services/api";
+import { type Booking } from "../models/booking";
 
 interface Props {
-  employees: Employee[];
-  onBookingCreated: () => void;
-  getTodayDate: () => string;
+  bookings: Booking[];
+  onBookingCancelled: () => void;
 }
 
-export const BookingForm: React.FC<Props> = ({
-  employees,
-  onBookingCreated,
-  getTodayDate,
+export const UpcomingBookings: React.FC<Props> = ({
+  bookings,
+  onBookingCancelled,
 }) => {
-  const [selectedEmployee, setSelectedEmployee] = useState("");
-  const [selectedDate, setSelectedDate] = useState("");
-  const [notes, setNotes] = useState("");
-  const [loading, setLoading] = useState(false);
-
-  const handleBooking = async () => {
-    if (!selectedEmployee || !selectedDate) return;
-
-    setLoading(true);
-    try {
-      await createBooking({
-        employeeId: parseInt(selectedEmployee),
-        employeeName:
-          employees.find((e) => e.id === parseInt(selectedEmployee))?.name ||
-          "",
-        date: selectedDate,
-        notes,
-      });
-      onBookingCreated();
-      setSelectedEmployee("");
-      setSelectedDate("");
-      setNotes("");
-    } catch {
-      alert("Booking failed. Try again.");
-    } finally {
-      setLoading(false);
-    }
+  const handleCancel = async (id: number) => {
+    await deleteBooking(id);
+    onBookingCancelled();
   };
+
+  const formatDate = (dateString: string) =>
+    new Date(dateString).toLocaleDateString("en-US", {
+      weekday: "long",
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
 
   return (
     <div className="space-y-6">
       <div className="flex items-center space-x-2 mb-4">
-        <Plus className="w-5 h-5 text-blue-600" />
-        <h2 className="text-xl font-semibold text-gray-800">New Booking</h2>
+        <Calendar className="w-5 h-5 text-green-600" />
+        <h2 className="text-xl font-semibold text-gray-800">
+          Upcoming Bookings
+        </h2>
       </div>
 
-      <div className="space-y-4">
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
-            Employee
-          </label>
-          <select
-            value={selectedEmployee}
-            onChange={(e) => setSelectedEmployee(e.target.value)}
-            className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-          >
-            <option value="">Select an employee</option>
-            {employees.map((e) => (
-              <option key={e.id} value={e.id}>
-                {e.name}
-              </option>
-            ))}
-          </select>
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
-            Date
-          </label>
-          <input
-            type="date"
-            value={selectedDate}
-            onChange={(e) => setSelectedDate(e.target.value)}
-            min={getTodayDate()}
-            className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-          />
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
-            Notes (Optional)
-          </label>
-          <textarea
-            value={notes}
-            onChange={(e) => setNotes(e.target.value)}
-            placeholder="Any additional notes..."
-            className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            rows={3}
-          />
-        </div>
-
-        <button
-          onClick={handleBooking}
-          disabled={loading}
-          className="w-full bg-blue-600 text-white py-3 px-4 rounded-lg hover:bg-blue-700 disabled:bg-gray-400 flex items-center justify-center space-x-2"
-        >
-          {loading ? (
-            <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
-          ) : (
-            <>
-              <Calendar className="w-5 h-5" />
-              <span>Book Parking Spot</span>
-            </>
-          )}
-        </button>
+      <div className="space-y-3 max-h-96 overflow-y-auto">
+        {bookings.length === 0 ? (
+          <div className="text-center py-8 text-gray-500">
+            <Car className="w-12 h-12 mx-auto mb-3 text-gray-300" />
+            <p>No upcoming bookings</p>
+            <p className="text-sm">The parking spot is available!</p>
+          </div>
+        ) : (
+          bookings.map((b) => (
+            <div
+              key={b.id}
+              className="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow"
+            >
+              <div className="flex justify-between items-start">
+                <div className="flex-1">
+                  <div className="flex items-center space-x-2 mb-2">
+                    <User className="w-4 h-4 text-blue-600" />
+                    <span className="font-medium text-gray-800">
+                      {b.employeeName}
+                    </span>
+                  </div>
+                  <div className="flex items-center space-x-2 mb-2">
+                    <Calendar className="w-4 h-4 text-green-600" />
+                    <span className="text-gray-600">{formatDate(b.date)}</span>
+                  </div>
+                  {b.notes && (
+                    <p className="text-sm text-gray-600 mt-2">
+                      <span className="font-medium">Notes:</span> {b.notes}
+                    </p>
+                  )}
+                </div>
+                <button
+                  onClick={() => handleCancel(b.id)}
+                  className="ml-4 text-red-600 hover:text-red-800 p-1 hover:bg-red-50 rounded"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              </div>
+            </div>
+          ))
+        )}
       </div>
     </div>
   );
