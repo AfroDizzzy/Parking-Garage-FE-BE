@@ -105,7 +105,7 @@ Not really an issue but something to note, but I've written this using no classe
 
 Hot loading isnt enabled, so developing for this can be quite clunky. Using vite would fix this, and would easy (given time) to implement.
 
-Better logging to allow for
+Logging in general.
 
 # Cool features to add in the future
 
