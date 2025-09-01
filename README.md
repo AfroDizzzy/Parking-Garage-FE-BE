@@ -57,7 +57,7 @@ Access the api via http://localhost:3001
 
 ## Front-End
 
-The front-end is a simple react + vite + tailwind base using as limited amount of libraries to maintain lightness and reduce unseen complexity.
+The front-end is a simple react + vite + tailwind base using as limited amount of libraries to maintain lightness and reduce unneccesary transient dependancies.
 
 Responsiveness was heavily considered and the app looks good and functions on a variety of screen sizes, although no specific @media settings have been used. With more time a fully thoughtout mobile design would have been implemented, and the more accessibility(a11y) considerations would have been implemented.
 
@@ -81,6 +81,8 @@ No global css vars. There are quite a number of places were global css variables
 
 The default vite logo is the flavicon.
 
+Alerts are used, and it would be better to have a toast or banner appear somewhere to show the alert in a nicer manner.
+
 All endpoints have not been engineered to fail gracefully, which means if the api is down then the app just doesnt work.
 
 ## Back-End
@@ -90,8 +92,6 @@ Express was the library of choice for the backend given the simple nature of the
 An in-memory array is the "database" for the backend, with abit more a time sqlite would have been used as the in-memory database of choice. Naturally this could be extracted further into a stand-alone database given even more time.
 
 Basic input validation has been include for the input dates, employee id's, note length limit.
-
-No .env file has been implemnted but the basic scafolding to use it (variables use defaults if no .env value found).
 
 #### known bugs/issues
 
