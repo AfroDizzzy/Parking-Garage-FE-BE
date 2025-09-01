@@ -2,34 +2,15 @@
 
 # Overview
 
-A simple application that allows employees to book the single car park space for a specific date.
+This is a simple full-stack application that allows employees to reserve the single parking space available on a given date.
 
-The project is seperated into two distinct packages, a backend and frontend. You have to run each one individually.
+The project is split into two independent packages:
 
---- Back-End Endpoints ---
+Backend (Express API)
 
-GET /api/employees
-Returns list of all employees
+Frontend (React + Vite + Tailwind)
 
-GET /api/bookings
-Returns all bookings with employee names
-
-GET /api/bookings/upcoming
-Returns upcoming bookings (next 30 days)
-
-GET /api/bookings/check/:date
-Check if a specific date is available
-Parameters: date (YYYY-MM-DD format)
-Response: { available: boolean, bookedBy?: string }
-
-POST /api/bookings
-Create a new booking
-Body: { employeeId: number, date: string, notes?: string }
-Response: Created booking object
-
-DELETE /api/bookings/:id
-Cancel a booking
-Parameters: id (booking ID)
+Both need to be run separately.
 
 # Requirements
 
@@ -59,15 +40,40 @@ npm run dev
 
 Navigate to http://localhost:5173/ on your browser
 
+# Backend API Endpoints
+
+GET /api/employees
+Returns list of all employees
+
+GET /api/bookings
+Returns all bookings with employee names
+
+GET /api/bookings/upcoming
+Returns upcoming bookings (next 30 days)
+
+GET /api/bookings/check/:date
+Check if a specific date is available
+Parameters: date (YYYY-MM-DD format)
+Response: { available: boolean, bookedBy?: string }
+
+POST /api/bookings
+Create a new booking
+Body: { employeeId: number, date: string, notes?: string }
+Response: Created booking object
+
+DELETE /api/bookings/:id
+Cancel a booking
+Parameters: id (booking ID)
+
 # Project Comments
 
 ## Front-End
 
-The front-end is a simple react + vite + tailwind base using as limited amount of libraries to maintain lightness and reduce unneccesary transient dependancies.
+The front-end is a standard stack consisting of react + vite + tailwind. External library usage was keep to a minimum to reduce transicient dependancies and maintain lightness. 
 
-Responsiveness was heavily considered and the app looks good and functions on a variety of screen sizes, although no specific @media settings have been used. With more time a fully thoughtout mobile design would have been implemented, and the more accessibility(a11y) considerations would have been implemented.
+Responsiveness was heavily considered and as such functions on a variety of screen sizes. With more time a fully thoughtout mobile design would have been implemented, including the addition of other (a11y) accesibility considerations. 
 
-Prop drilling has been used instead of state manager such as Redux or tanstack to maintain simplicity and respect the time constraint.
+Prop drilling has been used instead of state manager (e.g. Redux, tanstack) to maintain simplicity and it would be considered over-engineering for such a simple use-case.
 
 To focus on a seperation of concerns within the project a type-based(layered) structure has been followed, with the components following a feature-based structure. Given the small nature of the application I thought this approach kept a balance between readability and complexity by keeping each component feature/domain focused.
 
@@ -93,21 +99,21 @@ All endpoints have not been engineered to fail gracefully, which means if the ap
 
 ## Back-End
 
-
 Express was the library of choice for the backend given that I am comfortable with it, and because Quanitiful use it with their backend systems.
 
 MVC or a service-oriented backend structure was used for the structure of this project. For example: interaction with the booking data(CRUD operations) is handled inside the bookingModel, the calls to models and their services is done inside the bookingController. There isnt any view or presentation layer since this is an API that doesnt return HTML. There isnt any service layer or any complex business logic, however the middleware can be see as the service layer as it processes any inputs to the endpoints before passing the request into the controllers. 
 
-An in-memory array is the "database" for the backend, with abit more a time sqlite would have been used as the in-memory database of choice. Naturally this could be extracted further into a stand-alone database given even more time.
+An in-memory array is the "database" for the backend, with abit more a time SQLite would have been used as the in-memory database of choice. Naturally this could be extracted further into a stand-alone database given even more time. Given the in-memory nature, the booking dissapear when the API is restarted. With SQLite the "db" could be stored in an s3 bucket to maintain state while still being in-memory.
 
 Basic input validation has been include for the input dates, employee id's, and note length limit.
+
+CORS security has been implemented due to how easy it was to implement but it should be noted that due to the simple nature of the application (and lack of other validation), that it is an unneeded feature. 
 
 ### known bugs/issues
 
 There is no way to add/remove users. Can be done manually by admins but can be quite time-consuming once you scale to a larger user-base.
 
-No authentification/authorisation due to time constraints. Therefore no cors middleware used.
-
+No authentification/authorisation due to time constraints.
 No cross-site protecting for the notes input area. Simple cleansing of the input would fix this.
 
 Not really an issue but something to note, but I've written this using no classes and used interfaces instead.
